@@ -2,18 +2,22 @@
 //Requiring module dependencies
 var express = require('express');
 var bodyParser = require('body-parser');
-var firebase = require('firebase');
+var firebase = require('./help/firebaseInit');
+var userCtrl = require('./controller/auth.js');
 
 //initialize express app
 var app = express();
 var route = express.Router();
 
-//setting up static directory
-app.use(express.static('public'));
-
 //setting up twig view engine
 app.set('views', process.cwd() + '/src/views');
 app.set('view engine', 'twig');
+
+//setting up static directory
+app.use(express.static('public'));
+//using bodyParser as middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //creating port for app
 var port = process.env.PORT || 3000;
@@ -26,13 +30,14 @@ app.route('/')
 
 app.route('/register')
     .get(function (req, res) {
-        res.send('Register Page');
-    });
+        res.render('register', { title:'Register' });
+    })
+    .post(userCtrl.registerUser);
 
 app.route('/login')
     .get(function (req, res) {
-        res.send('Login Page');
-    });
+        res.render('login', {title:'Log In'});
+    }).post(userCtrl.signInUser)
 
 app.route('/dashboard')
     .get(function (req, res) {
@@ -43,6 +48,8 @@ app.route('/history')
     .get(function (req, res) {
         res.send('History Page');
     });
+app.route('/google')
+    .get(userCtrl.signInWithGoogle);
 
 app.route('/test')
     .get(function (req, res) {
