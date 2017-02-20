@@ -1,0 +1,32 @@
+{
+  "name": "bc-19-typing-speed-app",
+  "version": "1.0.0",
+  "description": "A app that calculates the typing speed of the user",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eguono/bc-19-typing-speed-app.git"
+  },
+  "keywords": [
+    "Express",
+    "Firebase",
+    "Jquery",
+    "twig",
+    "body-parser"
+  ],
+  "author": "Eguonoghene Efekemo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eguono/bc-19-typing-speed-app/issues"
+  },
+  "homepage": "https://github.com/Eguono/bc-19-typing-speed-app#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "firebase": "^3.6.9",
+    "twig": "^0.10.3"
+  }
+}
