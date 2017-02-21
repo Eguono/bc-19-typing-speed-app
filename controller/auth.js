@@ -1,28 +1,24 @@
-var firebase = require('../help/firebaseInit');
+var firebase = require('../initialize/firebaseInit');
 var db = firebase.database();
+var ref = db.ref("/");
+var firstName, lastName, email, password
 
-function registerUser(req, res) {
-    var firstName = req.body.firstName;
-    var lastName = req.body.lastName;
-    var email = req.body.email;
-    var password = req.body.password;
+function signUpUser(req, res) {
+    firstName = req.body.firstName;
+    lastName = req.body.lastName;
+    email = req.body.email;
+    password = req.body.password;
 
+    initApp();
     firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(function (userObject) {
-            var userId = userObject.uid;
+        // .then(function (userObject) {
+        //     var userId = userObject.uid;
 
-            var ref = db.ref("/");
-            var usersRef = ref.child("users/" + userId);
+        //     // Write the user joined date to the user table in db
+        //     
 
-            // Write the user joined date to the user table in db
-            usersRef.update({
-                firstName: firstName,
-                lastName: lastName,
-                email: email
-            });
-
-        })
-        .then(res.redirect('/login'))
+        // })
+        .then(res.redirect('/dashboard'))
         .catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
@@ -35,7 +31,7 @@ function registerUser(req, res) {
             }
             console.log(error);
             // [END_EXCLUDE]
-            res.redirect('/register');
+            res.redirect('/signUp');
         });
 
 }
@@ -46,7 +42,7 @@ function signInWithGoogle() {
     provider.addScope('profile');
     provider.addScope('email');
     provider.addScope('https://www.googleapis.com/auth/plus.login');
-
+    initApp();
     return firebase.auth().signInWithPopup(provider)
         .then(function (result) {
             var token = result.credential.accessToken;
@@ -54,6 +50,7 @@ function signInWithGoogle() {
 
             console.log(token)
             console.log(user)
+            res.redirect('/dashboard');
         }).catch(function (error) {
             console.log('Google sign in error', error);
         });
@@ -63,13 +60,15 @@ function signInWithGoogle() {
 function signInUser(req, res) {
     var email = req.body.email;
     var password = req.body.password
-
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorMessage);
-    });
+    initApp();
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(res.redirect('/dashboard'))
+        .catch(function (error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorMessage);
+        });
 }
 function signOut(req, res) {
     firebase.auth().signOut().then(function () {
@@ -81,9 +80,37 @@ function signOut(req, res) {
     });
 }
 
+
+function initApp() {
+    // Listening for auth state changes.
+    // [START authstatelistener]
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var userId = user.uid;
+            var providerData = user.providerData;
+            var usersRef = ref.child("users/" + userId);
+
+
+            return usersRef.set({
+                firstName: firstName,
+                lastName: lastName,
+                email: email
+            });
+            console.log(user);
+        }
+
+    });
+}
+// [END authstatelistener]
 module.exports = {
     signInWithGoogle,
-    registerUser,
+    signUpUser,
     signInUser,
-    signOut
+    signOut,
 }

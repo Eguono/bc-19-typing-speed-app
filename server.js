@@ -2,8 +2,9 @@
 //Requiring module dependencies
 var express = require('express');
 var bodyParser = require('body-parser');
-var firebase = require('./help/firebaseInit');
+var firebase = require('./initialize/firebaseInit');
 var userCtrl = require('./controller/auth.js');
+
 
 //initialize express app
 var app = express();
@@ -28,11 +29,11 @@ app.route('/')
         res.send('Home Page');
     });
 
-app.route('/register')
+app.route('/signUp')
     .get(function (req, res) {
-        res.render('register', { title:'Register' });
+        res.render('signUp', { title:'Sign Up' });
     })
-    .post(userCtrl.registerUser);
+    .post(userCtrl.signUpUser);
 
 app.route('/login')
     .get(function (req, res) {
