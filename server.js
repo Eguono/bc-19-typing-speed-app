@@ -26,7 +26,7 @@ var port = process.env.PORT || 3000;
 //routing for web app
 app.route('/')
     .get(function (req, res) {
-        res.send('Home Page');
+        res.render('index', { title:'Home Page' });
     });
 
 app.route('/signUp')
@@ -42,19 +42,19 @@ app.route('/login')
 
 app.route('/dashboard')
     .get(function (req, res) {
-        res.send('Dashboard Page');
+        res.render('dashboard', { title:'User Dashboard' });
     });
 
 app.route('/history')
     .get(function (req, res) {
-        res.send('History Page');
+        res.render('history', { title:'Typing Test History' });
     });
 app.route('/google')
     .get(userCtrl.signInWithGoogle);
 
 app.route('/test')
     .get(function (req, res) {
-        res.send('Typing test page');
+        res.render('test', { title:'Typing Speed Page' });
     });
 
 //listening for app on port 3000

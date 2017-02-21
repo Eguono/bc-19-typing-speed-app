@@ -58,8 +58,8 @@ function signInWithGoogle() {
 
 
 function signInUser(req, res) {
-    var email = req.body.email;
-    var password = req.body.password
+    email = req.body.email;
+    password = req.body.password
     initApp();
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(res.redirect('/dashboard'))

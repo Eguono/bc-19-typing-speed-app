@@ -1,0 +1,83 @@
+{% extends 'layout.twig' %} {% block body %}
+<div class="container">
+  <h1>Typing Speed Page</h1>
+  <p class="lead">Test your typing speed</p>
+
+
+  <!-- Typography
+================================================== -->
+  <section id="typography">
+
+    <!-- Headings & Paragraph Copy -->
+    <div class="row">
+
+      <div class="col-lg-6">
+        <div class="well">
+          <button class="btn btn-primary" id="beginTest">Begin Test</button>
+          <!--<a class="btn btn-lg btn-primary test" data-toggle="modal" href="#myModal">Begin Typing</a>-->
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+
+        <h3>Bootstrap Framework</h3>
+        <p>In simple terms, a responsive web design figures out what resolution of device it's being served on. Flexible grids
+          then size correctly to fit the screen.</p>
+        <p>The new Bootstrap 3 promises to be a smaller build. The separate Bootstrap base and responsive.css files have now
+          been merged into one. There is no more fixed grid, only fluid.</p>
+        <hr>
+        <blockquote class="pull-right">
+          <p>Have you ever had a project where you thought it would be so much better to just throw everything out and start
+            over? I believe that’s what’s happening with BS3.</p>
+          <small><cite title="Source Title">Quasipickle</cite></small>
+        </blockquote>
+
+      </div>
+    </div>
+  </section>
+
+
+
+  <section id="article" class="hidden">
+    <div class="row">
+      <div class="col-lg-12">
+        <div>
+          <p>I have received a large amount of correspondence concerning this small work, and many reviews of it--some of them
+            nearly as long as the book itself--have been printed. But scarcely any of the comment has been adverse.</p>
+
+          <p>Some people have objected to a frivolity of tone; but as the tone is not, in my opinion, at all frivolous, this
+            objection did not impress me; and had no weightier reproach been put forward I might almost have been persuaded
+            that the volume was flawless! A more serious stricture has, however, been offered--not in the press, but by sundry
+            obviously sincere correspondents--and I must deal with it. </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12">
+      <div class="well">
+        <form>
+          <div class="form-group">
+            <label for="Typed">Type Here</label>
+            <input type="text" class="form-control" id="typed">
+          </div>
+          <button type="button" onclick="store()" class="btn btn-default" id='submit'>Submit</button>
+        </form>
+        <p id="typeView"></p>
+      </div>
+    </div>
+  </section>
+
+<section id = 'result'><div class='well'>
+    <p>display result</p>
+  </div></section>
+  
+
+
+  <!-- script references -->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script href = 'js/app.js'></script>
+  {% endblock %}
+
+  </html>
