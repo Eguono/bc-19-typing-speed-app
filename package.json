@@ -24,9 +24,13 @@
   },
   "homepage": "https://github.com/Eguono/bc-19-typing-speed-app#readme",
   "dependencies": {
+    "axios": "^0.15.3",
     "body-parser": "^1.16.1",
     "express": "^4.14.1",
     "firebase": "^3.6.9",
     "twig": "^0.10.0"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0"
   }
 }

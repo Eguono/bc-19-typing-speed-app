@@ -1,7 +1,7 @@
 var firebase = require('../initialize/firebaseInit');
 var db = firebase.database();
 var ref = db.ref("/");
-var firstName, lastName, email, password
+var firstName, lastName, email, password, userId
 
 function signUpUser(req, res) {
     firstName = req.body.firstName;
@@ -9,15 +9,19 @@ function signUpUser(req, res) {
     email = req.body.email;
     password = req.body.password;
 
-    initApp();
     firebase.auth().createUserWithEmailAndPassword(email, password)
-        // .then(function (userObject) {
-        //     var userId = userObject.uid;
+        .then(function (user) {
+            var userId = user.uid
+            var usersRef = ref.child("users/" + userId);
 
-        //     // Write the user joined date to the user table in db
-        //     
 
-        // })
+            return usersRef.set({
+                firstName: firstName,
+                lastName: lastName,
+                email: email
+            });
+
+        })
         .then(res.redirect('/dashboard'))
         .catch(function (error) {
             // Handle Errors here.
@@ -26,12 +30,16 @@ function signUpUser(req, res) {
             // [START_EXCLUDE]
             if (errorCode == 'auth/weak-password') {
                 console.log('The password is too weak.');
-            } else {
-                console.log(errorMessage);
+                res.redirect('/signUp');
             }
-            console.log(error);
-            // [END_EXCLUDE]
-            res.redirect('/signUp');
+            else if (errorMessage === 'The password is invalid or the user does not have a password.') {
+                res.redirect('/signUp');
+            }
+            else {
+                console.log(errorMessage);
+                res.redirect("/dashboard");
+            }
+            // [END_EXCLUDE]     
         });
 
 }
@@ -42,7 +50,6 @@ function signInWithGoogle() {
     provider.addScope('profile');
     provider.addScope('email');
     provider.addScope('https://www.googleapis.com/auth/plus.login');
-    initApp();
     return firebase.auth().signInWithPopup(provider)
         .then(function (result) {
             var token = result.credential.accessToken;
@@ -60,15 +67,18 @@ function signInWithGoogle() {
 function signInUser(req, res) {
     email = req.body.email;
     password = req.body.password
-    initApp();
     firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(res.redirect('/dashboard'))
+        .then(function (user) { res.redirect('/dashboard') })
         .catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
+            if (errorMessage === "The password is invalid or the user does not have a password.") {
+                res.redirect('/login');
+            }
             console.log(errorMessage);
-        });
+        })
+
 }
 function signOut(req, res) {
     firebase.auth().signOut().then(function () {
@@ -94,23 +104,82 @@ function initApp() {
             var isAnonymous = user.isAnonymous;
             var userId = user.uid;
             var providerData = user.providerData;
-            var usersRef = ref.child("users/" + userId);
-
-
-            return usersRef.set({
-                firstName: firstName,
-                lastName: lastName,
-                email: email
-            });
-            console.log(user);
         }
 
     });
 }
+
+function postInHistory(req, res) {
+    var startTime = req.body.date;
+    var typingSpeed = req.body.typingSpeed;
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var userId = user.uid;
+            var providerData = user.providerData;
+
+            ref.child('users/' + userId + '/firstName').once('value', function (snapShot) {
+
+                var result = {};
+                var data = {
+                    firstName: snapShot.val(),
+                    startTime: startTime,
+                    typingSpeed: typingSpeed
+                };
+                result["history/" + userId] = data;
+                result["leaderboard/" + userId] = data;
+
+                ref.update(result);
+
+                res.redirect('/test');
+            });
+        }
+
+    });
+
+}
+
+function getFromHistory(req, res) {
+
+    var historyRef = ref('history');
+    var historyLink = historyRef.toString() + '.json?shallow=false';
+    axios.get(historyLink)
+        .then(function (res) {
+            var keys = Object.keys(res.data);
+            console.log(keys);
+        })
+        .catch(function (err) {
+            console.log('err');
+        });
+
+}
+
+function getFromLeaderBoard(req, res) {
+
+    var leaderBoardRef = ref('leaderboard');
+    var leaderBoardLink = historyRef.toString() + '.json?shallow=false';
+    axios.get(leaderBoardLink)
+        .then(function (res) {
+            var keys = Object.keys(res.data);
+            console.log(keys);
+        })
+        .catch(function (err) {
+            console.log('err');
+        });
+
+}
+
+
 // [END authstatelistener]
 module.exports = {
     signInWithGoogle,
     signUpUser,
     signInUser,
     signOut,
+    postInHistory
 }

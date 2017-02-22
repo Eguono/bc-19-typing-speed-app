@@ -62,7 +62,21 @@
 
   <section id='result' class='hidden'>
     <div class='well'>
-      <p>display results</p>
+      <h3>display results</h3>
+      <p>You type at a speed of <strong id='showResult'></strong> per minute</p>
+
+      <form method="post" action="/test">
+          <div class="form-group hidden" >
+            <label for="date">Date</label>
+            <input type="text" name="date" id="date" class="form-control">
+          </div>
+          <div class="form-group hidden">
+            <label for="typingSpeed">Last Name</label>
+            <input type="number" name="typingSpeed" id="typingSpeed" class="form-control">
+          </div>
+        <button type="submit" class="btn btn-default" id='addHistory'>Add History</button>
+      </form>
+      
     </div>
   </section>
 

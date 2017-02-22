@@ -4,7 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var firebase = require('./initialize/firebaseInit');
 var userCtrl = require('./controller/auth.js');
-
+var config = require('dotenv').config()
 
 //initialize express app
 var app = express();
@@ -16,6 +16,7 @@ app.set('view engine', 'twig');
 
 //setting up static directory
 app.use(express.static('public'));
+
 //using bodyParser as middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -56,7 +57,8 @@ app.route('/google')
 app.route('/test')
     .get(function (req, res) {
         res.render('test', { title:'Typing Speed Page' });
-    });
+    })
+    .post(userCtrl.postInHistory);
 
 //listening for app on port 3000
 app.listen(port, function () {
