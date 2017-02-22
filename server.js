@@ -38,7 +38,8 @@ app.route('/signUp')
 app.route('/login')
     .get(function (req, res) {
         res.render('login', {title:'Log In'});
-    }).post(userCtrl.signInUser)
+    })
+    .post(userCtrl.signInUser)
 
 app.route('/dashboard')
     .get(function (req, res) {

@@ -13,6 +13,10 @@ function compareArticle(article, typed) {
   return result;
 }
 
+function retriveFromLocalStorage(name){
+  return JSON.parse(localStorage.getItem(name));
+}
+
 function timeTominutesandSeconds(millis) {
   var minutes = Math.floor(millis / 60000);
   var seconds = ((millis % 60000) / 1000).toFixed(0);
@@ -35,10 +39,10 @@ end = new Date();
 
 function typeSpeed(article, typed) {
   var compare = compareArticle(article, typed);
-  if (compare < -6) {
+  if (compare > -6) {
     var time = timeToSeconds(start.getTime() - end.getTime());
     var words = article.length;
-    var speed = words / time;
+    var speed = (words / time) * 60;
     return speed;
   }
   return "You made too many errors";
@@ -54,7 +58,7 @@ function getRandomArticles(article){
 
 }
 
-var articles = [firstArticle, secondArticle, thirdArticle, fourthArticle, fifthArticle, sixArticle, seventhArticle, eighthArticle, ninthArticle, tenthArticle];
+
 var firstArticle = "Humans use mirrors so reflexively that we’ll often use shop windows or phone screens to preen ourselves without a second thought. But it didn’t always come so easy. Before the age of about two, kids don’t see themselves when they look in the mirror—they have to develop that ability over time. Until they do, they just think they're looking at another baby. And new evidence suggests the same might be true for some monkeys";
 
 var secondArticle = "Great apes and humans have long been amongst the few species to pass the mirror test, also known as the mark test. When researchers put an ink mark on a great ape’s forehead without the ape realizing, then put it in front of a mirror, the ape can recognize that it’s looking at its own reflection and will reach up to touch the unfamiliar mark.";
@@ -74,3 +78,4 @@ var eighthArticle = "Both agreed that what the rhesus monkeys demonstrated went 
 var ninthArticle = "When these monkeys went back to their cages, they weren’t preening with their mirrors because someone trained them to do so. They’d generalized the knowledge they'd accumulated over time, explains Rajala.";
 
 var tenthArticle = "The rhesus monkeys she’s worked with have exhibited similar learning. Her lab puts mirrors into the cages when the monkeys are just infants, giving them ample time to learn and understand how the surfaces work.";
+var articles = [firstArticle, secondArticle, thirdArticle, fourthArticle, fifthArticle, sixArticle, seventhArticle, eighthArticle, ninthArticle, tenthArticle];
