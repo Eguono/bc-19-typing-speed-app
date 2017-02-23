@@ -112,9 +112,9 @@ $(document).ready(function () {
     result(retrivedArticle, typedArticle, startTime, endTime);
     $('#showResult').append(JSON.parse(localStorage.getItem('typingSpeed')));
     $('#result').removeClass("hidden");
-    $('#date').val(JSON.parse(localStorage.getItem('Start-Time')));
-    $('#typingSpeed').val(localStorage.getItem('typingSpeed'));
+    var date = JSON.parse(localStorage.getItem('Start-Time'))
+    var wordSpeed = localStorage.getItem('typingSpeed')
+    // $('#date').val(JSON.parse(localStorage.getItem('Start-Time')));
+    // $('#typingSpeed').val(localStorage.getItem('typingSpeed'));
   });
-
-
 });

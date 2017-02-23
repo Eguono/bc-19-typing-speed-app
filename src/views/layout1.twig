@@ -20,19 +20,20 @@
 <body>
 
   <div class="container">
-    <div class="header clearfix menu" >
+    {#<div class="header clearfix">
       <nav>
         <ul class="nav nav-pills pull-right">
-
-          <li role="presentation"><a href="/dashboard">Dashboard</a></li>
           <li role="presentation"><a href="/test">Check Speed</a></li>
+          <li role="presentation"><a href="/login">Login</a></li>
+          <li role="presentation"><a href="/signUp">Sign Up</a></li>       
+          <li role="presentation" class="active"><a href="/dashboard">Dashboard</a></li>
           <li role="presentation"><a href="/leaderboard">Leadership Board</a></li>
           <li role="presentation"><a href="/history">View History</a></li>
           <li role="presentation"><a href="/logout">Logout</a></li>
         </ul>
       </nav>
       <h3 class="text-muted"><a class="navbar-brand" href="/">Typing Speed App</a></h3>
-    </div>
+    </div>#}
 
     <div class="row">
 
@@ -61,21 +62,6 @@
 
   <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <script>
-    var menu = document.querySelector('.menu');
-    var anchors = menu.getElementsByTagName('a');
-
-    for (var i = 0; i < anchors.length; i += 1) {
-      anchors[i].addEventListener('click', function () { clickHandler(anchors[i]) }, false);
-    }
-
-    function clickHandler(anchor) {
-      var hasClass = anchor.getAttribute('class');
-      if (hasClass !== 'active') {
-        anchor.setAttribute('class', 'active');
-      }
-    }
-  </script>
 </body>
 
 </html>

@@ -44,26 +44,6 @@ function signUpUser(req, res) {
 
 }
 
-function signInWithGoogle() {
-    //Sign in with Google
-    var provider = new firebase.auth.GoogleAuthProvider();
-    provider.addScope('profile');
-    provider.addScope('email');
-    provider.addScope('https://www.googleapis.com/auth/plus.login');
-    return firebase.auth().signInWithPopup(provider)
-        .then(function (result) {
-            var token = result.credential.accessToken;
-            var user = result.user;
-
-            console.log(token)
-            console.log(user)
-            res.redirect('/dashboard');
-        }).catch(function (error) {
-            console.log('Google sign in error', error);
-        });
-}
-
-
 function signInUser(req, res) {
     email = req.body.email;
     password = req.body.password
@@ -80,6 +60,7 @@ function signInUser(req, res) {
         })
 
 }
+
 function signOut(req, res) {
     firebase.auth().signOut().then(function () {
         res.redirect('/login');
@@ -91,11 +72,8 @@ function signOut(req, res) {
 }
 
 
-
-
 // [END authstatelistener]
 module.exports = {
-    signInWithGoogle,
     signUpUser,
     signInUser,
     signOut,

@@ -46,7 +46,6 @@ function getFromHistory(req, res) {
 
             ref.child('history/' + userId).once('value', function (snapShot) {
                 res.render('history', { title: 'User history', history: snapShot.val() });
-                console.log(snapShot.val());
             });
 
         }
@@ -61,7 +60,7 @@ function getFromLeaderBoard(req, res) {
             // User is signed in.
             var email = user.email;
             var userId = user.uid;
-            ref.child('leaderboard').on('value', function (snapShot) {
+            ref.child('leaderboard').orderByChild('typingSpeed').once('value', function (snapShot) {
                 res.render('leaderBoard', { title: 'Leadership Board', leaders: snapShot.val() });
 
             });

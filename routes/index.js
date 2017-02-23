@@ -5,7 +5,7 @@ module.exports = function (app, route) {
     //routing for web app
     app.route('/')
         .get(function (req, res) {
-            res.render('index', { title: 'Home Page' });
+            res.render('login', { title: 'Home Page' });
         });
 
     app.route('/signUp')
@@ -31,13 +31,12 @@ module.exports = function (app, route) {
     app.route('/leaderboard')
         .get(pageCtrl.getFromLeaderBoard);
 
-    app.route('/google')
-        .get(userCtrl.signInWithGoogle);
-
     app.route('/test')
         .get(function (req, res) {
             res.render('test', { title: 'Typing Speed Page' });
         })
         .post(pageCtrl.postInHistory);
+    app.route('/logout')
+        .get(userCtrl.signOut);
 
 }

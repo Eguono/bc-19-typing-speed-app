@@ -10,7 +10,7 @@
     </thead>
     <tbody>
 
-        {% if leaders %} {% set inc = 1 %} {% for scores in leaders %}
+        {% if leaders %} {% set inc = 1 %} {% for scores in leaders|reverse(true) %}
         <tr>
             <td>{{inc}}</td>
             <td>{{scores.firstName}}</td>
