@@ -44,7 +44,7 @@ function getFromHistory(req, res) {
             var email = user.email;
             var userId = user.uid;
 
-            ref.child('history/' + userId).on('value', function (snapShot) {
+            ref.child('history/' + userId).once('value', function (snapShot) {
                 res.render('history', { title: 'User history', history: snapShot.val() });
                 console.log(snapShot.val());
             });
