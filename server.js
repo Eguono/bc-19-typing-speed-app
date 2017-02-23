@@ -17,6 +17,7 @@ app.set('view engine', 'twig');
 //setting up static directory
 app.use(express.static('public'));
 
+
 //using bodyParser as middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,9 +49,11 @@ app.route('/dashboard')
     });
 
 app.route('/history')
-    .get(function (req, res) {
-        res.render('history', { title:'Typing Test History' });
-    });
+    .get(userCtrl.getFromHistory);
+
+app.route('/leaderboard')
+    .get(userCtrl.getFromLeaderBoard);
+
 app.route('/google')
     .get(userCtrl.signInWithGoogle);
 

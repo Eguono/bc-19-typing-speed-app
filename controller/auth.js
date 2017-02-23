@@ -131,7 +131,11 @@ function postInHistory(req, res) {
                     startTime: startTime,
                     typingSpeed: typingSpeed
                 };
-                result["history/" + userId] = data;
+                var scoresRef = ref.child('history/' + userId);
+                var scoreRef = scoresRef.push();
+                var scoreKey = scoreRef.key;
+                
+                result["history/" + userId + "/" + scoreKey] = data;
                 result["leaderboard/" + userId] = data;
 
                 ref.update(result);
@@ -145,32 +149,37 @@ function postInHistory(req, res) {
 }
 
 function getFromHistory(req, res) {
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var userId = user.uid;
 
-    var historyRef = ref('history');
-    var historyLink = historyRef.toString() + '.json?shallow=false';
-    axios.get(historyLink)
-        .then(function (res) {
-            var keys = Object.keys(res.data);
-            console.log(keys);
-        })
-        .catch(function (err) {
-            console.log('err');
-        });
+            ref.child('history/' + userId).on('value', function (snapShot) {
+                res.render('history', { title: 'User history', history: snapShot.val() });
+                console.log(snapShot.val());
+            });
+
+        }
+    });
 
 }
 
 function getFromLeaderBoard(req, res) {
 
-    var leaderBoardRef = ref('leaderboard');
-    var leaderBoardLink = historyRef.toString() + '.json?shallow=false';
-    axios.get(leaderBoardLink)
-        .then(function (res) {
-            var keys = Object.keys(res.data);
-            console.log(keys);
-        })
-        .catch(function (err) {
-            console.log('err');
-        });
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var userId = user.uid;
+            ref.child('leaderboard').on('value', function (snapShot) {
+                res.render('leaderBoard', { title: 'Leadership Board', leaders: snapShot.val() });
+
+            });
+        }
+    });
 
 }
 
@@ -181,5 +190,7 @@ module.exports = {
     signUpUser,
     signInUser,
     signOut,
-    postInHistory
+    postInHistory,
+    getFromHistory,
+    getFromLeaderBoard
 }

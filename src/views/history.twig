@@ -1,5 +1,26 @@
-{% extends 'layout.twig' %}
+{% extends 'layout.twig' %} {% block body %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>S/N</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Words per Minute</th>
+        </tr>
+    </thead>
+    <tbody>
 
-{% block body %}
+        {% if history %} {% set inc = 1 %} {% for scores in history %}
+        <tr>
+            <td>{{inc}}</td>
+            <td>{{scores.firstName}}</td>
+            <td>{{scores.startTime}}</td>
+            <td>{{scores.typingSpeed}}</td>
+        </tr>
+        {% set inc = inc + 1 %}
 
+        <!--<div class="alert alert-danger">{{ error.msg }}</div>-->
+        {% endfor %} {% endif %}
+    </tbody>
+</table>
 {% endblock %}
