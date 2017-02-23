@@ -24,7 +24,7 @@ function compareArticle(article, typed) {
         result += index;
       }
     }
-    if (result > -7) { return true; }
+    if (result > -art.length/2) { return true; }
   }
   else {
     return false;
@@ -112,9 +112,11 @@ $(document).ready(function () {
     result(retrivedArticle, typedArticle, startTime, endTime);
     $('#showResult').append(JSON.parse(localStorage.getItem('typingSpeed')));
     $('#result').removeClass("hidden");
-    var date = JSON.parse(localStorage.getItem('Start-Time'))
-    var wordSpeed = localStorage.getItem('typingSpeed')
-    // $('#date').val(JSON.parse(localStorage.getItem('Start-Time')));
-    // $('#typingSpeed').val(localStorage.getItem('typingSpeed'));
+    $('#date').val(JSON.parse(localStorage.getItem('Start-Time')));
+    $('#typingSpeed').val(localStorage.getItem('typingSpeed'));
+  });
+
+  $('#retakeTest').on('click', function(){
+    location.reload();
   });
 });

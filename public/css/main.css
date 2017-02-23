@@ -4,6 +4,9 @@ body {
   padding-bottom: 20px;
 }
 
+#logout{
+  float:right;
+}
 nav{
 background-color:rgb(100, 10, 256)
 }

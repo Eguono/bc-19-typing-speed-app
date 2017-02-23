@@ -19,29 +19,38 @@
 
       <div class="col-lg-9">
 
-        <h3>Bootstrap Framework</h3>
-        <p>In simple terms, a responsive web design figures out what resolution of device it's being served on. Flexible grids
-          then size correctly to fit the screen.</p>
-        <p>The new Bootstrap 3 promises to be a smaller build. The separate Bootstrap base and responsive.css files have now
-          been merged into one. There is no more fixed grid, only fluid.</p>
+        <h3>How it works</h3>
+        <p>And here is how it works: Just type as many words as you can in one minute. After the test ends you will receive
+          your result as a WPM-value, which means words per minute (the amount of words you can type per minute). You can
+          share your score with your friends</p>
+        <hr>
+        <h4>Typing test rules</h4>
+        
+        <p>If you do NOT fix the errors in your typing, a penalty will be added to your final WPM score. To fix the errors,
+          press the backspace key.
+        </p>
+        <p>The timer starts when you click "Begin Test". The timer stops when you click "End Test".</p>
+        <p>If you make too many errors, you will not be scored</p>
+        <hr>
+        <p>Include your score in a your history, track your progress. Click the "Add History" button after the test</p>
         <hr>
         <blockquote class="pull-right">
-          <p>Have you ever had a project where you thought it would be so much better to just throw everything out and start
-            over? I believe that’s what’s happening with BS3.</p>
-          <small><cite title="Source Title">Quasipickle</cite></small>
+          <p>Speed and Quality, these are the keys to success</p>
+          <small><cite title="Source Title">Efe</cite></small>
         </blockquote>
 
       </div>
     </div>
   </section>
 
-
+  <hr>
+  <hr>
 
   <section id="article" class="hidden">
     <div class="row">
       <div class="col-lg-12">
         <div>
-          <p id='passage'></p>
+          <em><h3 id='passage'></h3></em>
         </div>
       </div>
     </div>
@@ -53,7 +62,7 @@
             <label for="Typed">Type Here</label>
             <input type="text" class="form-control" id="typed">
           </div>
-          <button type="button" class="btn btn-default" id='submit'>Submit</button>
+          <button type="button" class="btn btn-default" id='submit'>End Test</button>
         </form>
         <p id="typeView"></p>
       </div>
@@ -62,21 +71,35 @@
 
   <section id='result' class='hidden'>
     <div class='well'>
-      <h3>display results</h3>
-      <p>You type at a speed of <strong id='showResult'></strong>words per minute</p>
+      <div class="row">
+        <div class="col-lg-6">
 
-      <form method="post" action="/test">
-          <div class="form-group hidden" >
-            <label for="date">Date</label>
-            <input type="text" name="date" id="date" class="form-control">
-          </div>
-          <div class="form-group hidden">
-            <label for="typingSpeed">Last Name</label>
-            <input type="number" name="typingSpeed" id="typingSpeed" class="form-control">
-          </div>
-        <button type="submit" class="btn btn-default" id='addHistory'>Add History</button>
-      </form>
-      
+          <h3>Display results</h3>
+          <p>You type at a speed of <strong id='showResult'></strong> WPM</p>
+
+          <form method="post" action="/test">
+            <div class="form-group hidden">
+              <label for="date">Date</label>
+              <input type="text" name="date" id="date" class="form-control">
+            </div>
+            <div class="form-group hidden">
+              <label for="typingSpeed">Last Name</label>
+              <input type="number" name="typingSpeed" id="typingSpeed" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-default" id='addHistory'>Add History</button>
+          </form>
+        </div>
+
+        <div class="col-lg-6">
+
+          <h3>Don't like your score</h3>
+          <p>Retake Test</p>
+          <button class="btn btn-primary" id="retakeTest">Retake Test</button>
+          <!--<a class="btn btn-lg btn-primary test" data-toggle="modal" href="#myModal">Begin Typing</a>-->
+
+        </div>
+
+      </div>
     </div>
   </section>
 

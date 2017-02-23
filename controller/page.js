@@ -44,8 +44,12 @@ function getFromHistory(req, res) {
             var email = user.email;
             var userId = user.uid;
 
-            ref.child('history/' + userId).once('value', function (snapShot) {
-                res.render('history', { title: 'User history', history: snapShot.val() });
+            ref.child('history/' + userId).orderByChild('typingSpeed').once('value', function (snapShot) {
+                 var data_reverse = []
+                snapShot.forEach(function (snap) {
+                    data_reverse.unshift(snap.val())
+                });
+                res.render('history', { title: 'User history', history: data_reverse });
             });
 
         }
@@ -61,13 +65,35 @@ function getFromLeaderBoard(req, res) {
             var email = user.email;
             var userId = user.uid;
             ref.child('leaderboard').orderByChild('typingSpeed').once('value', function (snapShot) {
-                res.render('leaderBoard', { title: 'Leadership Board', leaders: snapShot.val() });
+                var data_reverse = []
+                snapShot.forEach(function (snap) {
+                    data_reverse.unshift(snap.val())
+                });
+                res.render('leaderBoard', { title: 'Leadership Board', leaders: data_reverse });
 
             });
         }
     });
 
 }
+// scoresRef.orderByChild("wpm").on("value", function (data) {
+//     var counter = 1;
+//     var data_reverse = []
+//     data.forEach(function (snap) {
+//         data_reverse.unshift(snap.val())
+//     })
+//     data_reverse.forEach(function (data) {
+//         console.log(data);
+//         var t = $('#my-table').DataTable();
+//         t.row.add([
+//             counter,
+//             data.userName,
+//             data.wpm,
+//             data.accuracy
+//         ]).draw(false);
+//         counter++
+//     })
+// });
 
 module.exports = {
     postInHistory,

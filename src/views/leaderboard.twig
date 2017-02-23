@@ -1,5 +1,5 @@
 {% extends 'layout.twig' %} {% block body %}
-<table class="table table-striped">
+<table class="table table-striped" id = "leader-table">
     <thead>
         <tr>
             <th>S/N</th>
@@ -10,7 +10,7 @@
     </thead>
     <tbody>
 
-        {% if leaders %} {% set inc = 1 %} {% for scores in leaders|reverse(true) %}
+        {% if leaders %} {% set inc = 1 %} {% for scores in leaders|slice(0, 10) %}
         <tr>
             <td>{{inc}}</td>
             <td>{{scores.firstName}}</td>
