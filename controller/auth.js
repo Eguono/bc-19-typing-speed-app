@@ -91,97 +91,6 @@ function signOut(req, res) {
 }
 
 
-function initApp() {
-    // Listening for auth state changes.
-    // [START authstatelistener]
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var isAnonymous = user.isAnonymous;
-            var userId = user.uid;
-            var providerData = user.providerData;
-        }
-
-    });
-}
-
-function postInHistory(req, res) {
-    var startTime = req.body.date;
-    var typingSpeed = req.body.typingSpeed;
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var isAnonymous = user.isAnonymous;
-            var userId = user.uid;
-            var providerData = user.providerData;
-
-            ref.child('users/' + userId + '/firstName').once('value', function (snapShot) {
-
-                var result = {};
-                var data = {
-                    firstName: snapShot.val(),
-                    startTime: startTime,
-                    typingSpeed: typingSpeed
-                };
-                var scoresRef = ref.child('history/' + userId);
-                var scoreRef = scoresRef.push();
-                var scoreKey = scoreRef.key;
-                
-                result["history/" + userId + "/" + scoreKey] = data;
-                result["leaderboard/" + userId] = data;
-
-                ref.update(result);
-
-                res.redirect('/test');
-            });
-        }
-
-    });
-
-}
-
-function getFromHistory(req, res) {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var userId = user.uid;
-
-            ref.child('history/' + userId).on('value', function (snapShot) {
-                res.render('history', { title: 'User history', history: snapShot.val() });
-                console.log(snapShot.val());
-            });
-
-        }
-    });
-
-}
-
-function getFromLeaderBoard(req, res) {
-
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var userId = user.uid;
-            ref.child('leaderboard').on('value', function (snapShot) {
-                res.render('leaderBoard', { title: 'Leadership Board', leaders: snapShot.val() });
-
-            });
-        }
-    });
-
-}
 
 
 // [END authstatelistener]
@@ -190,7 +99,4 @@ module.exports = {
     signUpUser,
     signInUser,
     signOut,
-    postInHistory,
-    getFromHistory,
-    getFromLeaderBoard
 }
