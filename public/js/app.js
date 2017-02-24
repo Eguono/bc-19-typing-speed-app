@@ -24,7 +24,7 @@ function compareArticle(article, typed) {
         result += index;
       }
     }
-    if (result > -art.length/2) { return true; }
+    if (result > -15) { return true; }
   }
   else {
     return false;
