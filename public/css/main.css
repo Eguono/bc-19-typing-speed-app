@@ -7,6 +7,10 @@ body {
 #logout{
   float:right;
 }
+
+h1 {font-family: Verdana, Arial, Helvetica, sans-serif;
+       font-size: 110%; color: mediumpurple; font-weight: bold; }
+
 nav{
 background-color:rgb(100, 10, 256)
 }
